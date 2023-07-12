@@ -1,0 +1,23 @@
+<!-- child.html -->
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="center-container">
+   <h1>EXTREME Media Matcher</h1>
+   </div>
+   <div class="center-container">
+   <p>Tired of your current media habits? We got you. Just enter an excerpt in the box below and we will match it with something from our media database! Currently it only consists of 
+    episodes from the simpsons, but the corpus available will be increasing!
+   </p>
+</div>
+<!-- HTML Form with a large text area -->
+<div class="center-container">
+<form action="/get-documents" method="POST">
+    <textarea name="text_input" rows="10" cols="100" placeholder="Enter your text"></textarea>
+    <button type="submit">Submit</button>
+</form>
+</div>
+
+
+{% endblock %}
