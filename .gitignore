@@ -1,0 +1,4 @@
+tfidf_vectorizer.pkl
+documents_idf.pkl
+documents.pkl
+kmeans.pkl
