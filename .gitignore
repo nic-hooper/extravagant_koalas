@@ -1,4 +1,4 @@
-tfidf_vectorizer.pkl
-documents_idf.pkl
-documents.pkl
-kmeans.pkl
+flask/tfidf_vectorizer.pkl
+flask/documents_idf.pkl
+flask/documents.pkl
+flask/kmeans.pkl
