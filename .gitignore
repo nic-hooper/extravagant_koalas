@@ -1,4 +1,6 @@
-flask/tfidf_vectorizer.pkl
-flask/documents_idf.pkl
-flask/documents.pkl
-flask/kmeans.pkl
+flask/pkls/tfidf_vectorizer.pkl
+flask/pkls/documents_idf.pkl
+flask/pkls/documents.pkl
+flask/pkls/kmeans.pkl
+transcripts_clean.csv
+transcripts_raw.csv
