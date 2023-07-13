@@ -1,0 +1,8 @@
+DONE step 1: generate clusterings 
+DONE step 2: generate rankings within clusterings via computing distance funct 
+DONE step 3: return highest 10 rankings in order of closest distance
+DONE step 4: preprocess function for entered documents
+DONE step 4: flask app 
+DONE step 5: interface for entering documents and generating highest 10 rankings within cluster and returning, along with link to download txt as a txt file
+step 6: look at column outputs and figure out whats causing 50k words
+step 7: add data to the model and retrain 
