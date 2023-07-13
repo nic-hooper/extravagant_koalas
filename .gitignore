@@ -4,3 +4,4 @@ flask/pkls/documents.pkl
 flask/pkls/kmeans.pkl
 transcripts_clean.csv
 transcripts_raw.csv
+flask/documents_idf.pkl

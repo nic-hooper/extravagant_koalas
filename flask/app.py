@@ -16,18 +16,19 @@ current_year = datetime.datetime.now().year
 
 # Get the current working directory
 current_path = os.getcwd()
-with open(current_path+'/extravagant_koalas/flask/pkls/tfidf_vectorizer.pkl', 'rb') as file:
+print(current_path)
+with open(current_path+'/pkls/tfidf_vectorizer.pkl', 'rb') as file:
         tfidf_vectorizer = pickle.load(file)
 
 
-with open(current_path+'/extravagant_koalas/flask/pkls/kmeans.pkl', 'rb') as file:
+with open(current_path+'/pkls/kmeans.pkl', 'rb') as file:
          kmeans =  pickle.load(file)
          
-with open(current_path+'/extravagant_koalas/flask/pkls/documents.pkl', 'rb') as file:
+with open(current_path+'/pkls/documents.pkl', 'rb') as file:
          documents =  pickle.load(file)
 documents = documents.reset_index().rename(columns={'level_0': 'documentNum'})
 
-with open(current_path+'/extravagant_koalas/flask/pkls/documents_idf.pkl', 'rb') as file:
+with open(current_path+'/pkls/documents_idf.pkl', 'rb') as file:
          tfidf_df =  pickle.load(file)
 
 
