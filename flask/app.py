@@ -9,6 +9,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import pandas as pd
 import ast
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+
 
 
 app = Flask(__name__)
@@ -53,6 +56,13 @@ def get_documents():
     input_tfidf = tfidf_vectorizer.transform([document_processed])
     predicted_cluster = kmeans.predict(input_tfidf)[0]
     matchingClusters = tfidf_df[tfidf_df['cluster']==predicted_cluster]
+   
+    # input_tfidf_norm = input_tfidf.toarray().reshape(1, -1) / np.linalg.norm(input_tfidf.toarray())
+    # matchingClusters_norm = matchingClusters / np.linalg.norm(matchingClusters, axis=1)[:, np.newaxis]
+    # matchingClusters_norm['cosine_similarity'] = cosine_similarity(input_tfidf_norm, matchingClusters_norm)[0]
+    # matchingClusters = matchingClusters_norm
+
+
     matchingClusters['cosine_similarity'] = cosine_similarity(input_tfidf, matchingClusters)[0]
 
     matchingClusters = matchingClusters.reset_index().rename(columns={'level_0': 'documentNum'})
