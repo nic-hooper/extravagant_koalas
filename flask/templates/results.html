@@ -23,7 +23,14 @@
     <ol>
         
             {% for item in resultsJson %}
+            <div class="center-container">
                 <li>Title: <b>{{ item.title }}</b> - Season and Episode: <em>{{ item.number }}</em> -  Score: {{item.cosine_similarity}}</li>
+            </div>
+                <br>
+                <div class="center-container">
+                <img src="{{ url_for('static', filename='img/plot_image_' + (loop.index|string)+'.png') }}" alt="Dynamic Image">
+                </div>
+    
             {% endfor %}
         </ul>
     </ol>

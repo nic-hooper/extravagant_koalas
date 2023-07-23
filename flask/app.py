@@ -11,6 +11,10 @@ import pandas as pd
 import ast
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
 
 
 
@@ -64,17 +68,50 @@ def get_documents():
 
 
     matchingClusters['cosine_similarity'] = cosine_similarity(input_tfidf, matchingClusters)[0]
-
     matchingClusters = matchingClusters.reset_index().rename(columns={'level_0': 'documentNum'})
     matchingClusters = matchingClusters.sort_values(by='cosine_similarity', ascending=False)
-    topTenResults = matchingClusters.head(10)
-    print(topTenResults)
+    topTenResults = matchingClusters.head(5)
+    resultsReturnerPlots = pd.merge(topTenResults, documents, left_on='documentNum', right_on = 'index', how='inner')
+
     topTenResults = topTenResults[['documentNum','cosine_similarity']]
     resultsReturner = pd.merge(topTenResults, documents, left_on='documentNum', right_on = 'index', how='inner')
+    input_tfidf_df = pd.DataFrame(input_tfidf.toarray(), columns=tfidf_vectorizer.get_feature_names_out())
+    for index, row in resultsReturnerPlots.iterrows():
+        resultsReturnerCopy = resultsReturnerPlots.copy()
+        tempReturner = resultsReturnerCopy.loc[[index]]
+        tempReturner.reset_index(drop=True, inplace=True)
+        input_tfidf_df.reset_index(drop=True, inplace=True)
+        tempReturner = tempReturner*input_tfidf_df
+
+        numeric_columns = tempReturner.select_dtypes(include='number').drop('documentNum',axis=1).drop('index_y',axis=1)
+        columns_to_keep = numeric_columns.sum().nlargest(10).index
+        
+
+            # Select the top 10 columns and other relevant columns from the DataFrame
+        result_df = tempReturner[['title_y', 'number', 'cosine_similarity'] + columns_to_keep.tolist()]
+        #result_rows.append(result_df)
+            # Create a new DataFrame containing only the selected columns and their values
+        plot_data = tempReturner[columns_to_keep.tolist()]
+        plot_data_transposed = plot_data.T
+
+        # Plot each column on a bar chart
+        plotHold = plot_data_transposed.plot(kind='bar', legend=False)
+
+        #buf = io.BytesIO()
+
+            # Add labels and title
+        plt.xlabel('Contributing Words')
+        plt.ylabel('Scores')
+        plt.title('Retrieval Explanation')
+        plt.tight_layout()
+        plt.savefig('static/img/plot_image_'+str(index)+'.png')
+        #plt.savefig(buf, format='png')
+        plt.close()
+    
+
     resultsJson = resultsReturner.to_json(orient='records')
     resultsJson = ast.literal_eval(resultsJson)
-    print(resultsJson)
-    print(type(resultsJson))
+    
 
     
 
@@ -82,4 +119,4 @@ def get_documents():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(threaded=False,debug=True)
