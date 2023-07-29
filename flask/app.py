@@ -38,6 +38,8 @@ documents = documents.reset_index().rename(columns={'level_0': 'documentNum'})
 with open(current_path+'/pkls/documents_idf.pkl', 'rb') as file:
          tfidf_df =  pickle.load(file)
 
+metadata = pd.read_csv('../episode_data.csv')
+
 
 @app.route('/')
 def index():
@@ -75,6 +77,12 @@ def get_documents():
 
     topTenResults = topTenResults[['documentNum','cosine_similarity']]
     resultsReturner = pd.merge(topTenResults, documents, left_on='documentNum', right_on = 'index', how='inner')
+    pattern = r'^(.*?)(?=x)'
+    resultsReturner['season'] = resultsReturner['number'].str.extract(pattern)
+    pattern = r'x(.*)'
+    resultsReturner['episode'] = resultsReturner['number'].str.extract(pattern)
+    resultsReturner = pd.merge(resultsReturner,metadata,left_on="number",right_on="ep_id")
+
     input_tfidf_df = pd.DataFrame(input_tfidf.toarray(), columns=tfidf_vectorizer.get_feature_names_out())
     for index, row in resultsReturnerPlots.iterrows():
         resultsReturnerCopy = resultsReturnerPlots.copy()
@@ -92,6 +100,8 @@ def get_documents():
         #result_rows.append(result_df)
             # Create a new DataFrame containing only the selected columns and their values
         plot_data = tempReturner[columns_to_keep.tolist()]
+        plot_data = plot_data.drop(plot_data.columns[plot_data.eq(0).all()], axis=1)
+
         plot_data_transposed = plot_data.T
 
         # Plot each column on a bar chart

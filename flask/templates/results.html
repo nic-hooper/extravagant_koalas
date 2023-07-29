@@ -18,22 +18,50 @@
 </form>
 </div>-->
 <body>
-    <h1>Highest Ranked Matches</h1>
+    <div class="center-container">
+    <h1>Media Has Been Matched!<br>
+        &#x1F428;</h1>
+</div>
   
-    <ol>
+    
         
             {% for item in resultsJson %}
             <div class="center-container">
-                <li>Title: <b>{{ item.title }}</b> - Season and Episode: <em>{{ item.number }}</em> -  Score: {{item.cosine_similarity}}</li>
+                <b>{{loop.index}}.</b>&nbsp; Title: &nbsp;<b>{{ item.title }}</b> 
+                </div>
+                <div class="center-container">
+                Season &nbsp;<b>{{ item.season }}</b>,  Episode &nbsp;<b>{{ item.episode}}</b>
+            </div>
+                 
+                </div>
+                 <div class="center-container">
+                    
+                Directors: 
+                <b>
+                {{item.directors}}
+                </b>
+                </div>
+<div class="center-container">
+
+
+                Description: 
+                <br/>
+                {{item.description}}
+                
+            </div>
+                
+                
+                    
             </div>
                 <br>
                 <div class="center-container">
                 <img src="{{ url_for('static', filename='img/plot_image_' + ((loop.index-1)|string)+'.png') }}" alt="Dynamic Image">
                 </div>
+                <br>
     
             {% endfor %}
-        </ul>
-    </ol>
+        
+    
 </body>
 
 
