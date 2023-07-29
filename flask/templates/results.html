@@ -28,7 +28,7 @@
             </div>
                 <br>
                 <div class="center-container">
-                <img src="{{ url_for('static', filename='img/plot_image_' + (loop.index|string)+'.png') }}" alt="Dynamic Image">
+                <img src="{{ url_for('static', filename='img/plot_image_' + ((loop.index-1)|string)+'.png') }}" alt="Dynamic Image">
                 </div>
     
             {% endfor %}
